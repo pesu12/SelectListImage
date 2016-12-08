@@ -37,9 +37,9 @@ $(document).ready(function(){
       "img/pasklamma.jpg", "Påsklämma", "Påsklämma","Bleck"
     ];
 
-  listRows = myList.length/4;
+    listRows = myList.length/4;
 
-  console.log(listRows);
+    console.log(listRows);
 
     //Copy list to question
     question = myList.slice();
@@ -58,9 +58,8 @@ $(document).ready(function(){
       "img/bleck.jpg", "Bleck", "",""
     ];
 
+    //how many rows we have
     listRows = myList.length/4;
-
-    console.log(listRows);
 
     console.log(myList);
 
@@ -84,26 +83,29 @@ $(document).ready(function(){
 
       //Here we set faulty answer
       for(var i =0; i<2; i++) {
-         if(myList[index+i]==="") {
-              myList[index+i] = setFaultyAnswer(index);
-  	       break;
-  	     }
+        if(myList[index+i]==="") {
+          myList[index+i] = myList[setFaultyAnswer(index)];
+          break;
+        }
       }
     }
 
     //Return faulty answer index
     function setFaultyAnswer(index) {
-        var result =0;
-        if(index=== 2) {
-          result = "Slickepott";
-        }
-        if(index=== 6) {
-          result = "Hålslev";
-        }
-        if(index=== 10) {
-          result = "Hålslev";
-        }
-        return result;
+      var result =0;
+      if(index=== 2) {
+        //Correct answer on other row
+        result = 5;
+      }
+      if(index=== 6) {
+        //Correct answer on other row
+        result = 1;
+      }
+      if(index=== 10) {
+        //Correct answer on other row
+        result = 1;
+      }
+      return result;
     }
   }
 
