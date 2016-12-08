@@ -54,7 +54,8 @@ $(document).ready(function(){
 
     var myList = [
       "img/halslev.jpg", "Hålslev","", "",
-      "img/Slickepott.jpg", "Slickepott", "",""
+      "img/Slickepott.jpg", "Slickepott", "","",
+      "img/bleck.jpg", "Bleck", "",""
     ];
 
     listRows = myList.length/4;
@@ -63,31 +64,30 @@ $(document).ready(function(){
 
     console.log(myList);
 
+
+    //Add not correct opition in the first free position, the option is not already used.
     var index= 2;
-    buildDynamicRow(index);
-
+    buildDynamicRow(2);
     index = 6;
-    buildDynamicRow(index);
-
-
-
+    buildDynamicRow(6);
+    index = 10;
+    buildDynamicRow(10);
 
     console.log(myList);
     //Copy list to question
     question = myList.slice();
 
-    //Add not correct opition in the first free position, the option is not already used.
     function buildDynamicRow(index) {
       //Here we set correct answer
       var correctPos = (Pesu.random(0,1));
-      myList[index+correctPos] = myList[index-1];
+      myList[index+correctPos] = myList[index-1]
 
       //Here we set faulty answer
       for(var i =0; i<2; i++) {
-        if(myList[index+i]==="") {
-              myList[index+i] = myList[setFaultyAnswer(index)];
-  	    break;
-        }
+         if(myList[index+i]==="") {
+              myList[index+i] = setFaultyAnswer(index);
+  	       break;
+  	     }
       }
     }
 
@@ -95,14 +95,16 @@ $(document).ready(function(){
     function setFaultyAnswer(index) {
         var result =0;
         if(index=== 2) {
-          result = index+4;
+          result = "Slickepott";
         }
         if(index=== 6) {
-          result = index-4;
+          result = "Hålslev";
+        }
+        if(index=== 10) {
+          result = "Hålslev";
         }
         return result;
     }
-
   }
 
 
