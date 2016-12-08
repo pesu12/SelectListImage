@@ -31,8 +31,8 @@ $(document).ready(function(){
       "img/halslev.jpg", "Hålslev","Tesked", "Hålslev",
       "img/Slickepott.jpg", "Slickepott", "Hålslev","Slickepott",
       "img/bleck.jpg", "Bleck", "Djupbleck","Bleck",
-      "img/djupbleck.jpg", "Djupbleck", "Kastrull","Djupbleck",
-      "img/natsil.jpg", "Nätslev", "Hålslev","Nätslev",
+      "img/djupbleck.jpg", "Djupbleck", "Kantin","Djupbleck",
+      "img/natsil.jpg", "Nätsil", "Hålslev","Nätsil",
       "img/skopa.jpg", "Skopa", "Sked","Skopa",
       "img/pasklamma.jpg", "Påsklämma", "Påsklämma","Bleck"
     ];
@@ -45,7 +45,7 @@ $(document).ready(function(){
     question = myList.slice();
 
   }
-  
+
   else {
     //Build up dynamic list
     console.log("Dynamic list created");
@@ -55,46 +55,53 @@ $(document).ready(function(){
     var myList = [
       "img/halslev.jpg", "Hålslev","", "",
       "img/Slickepott.jpg", "Slickepott", "",""
-    ];i
+    ];
 
     listRows = myList.length/4;
-  
+
     console.log(listRows);
 
     console.log(myList);
 
-
-    //Add not correct opition in the first free position, the option is not already used.
     var index= 2;
-
-    //Add correct option in a position
-    var correctPos = (Pesu.random(0,1));
-    myList[2+correctPos] = "Hålslev";
-
-
-    for(var i =0; i<2; i++) {
-      if(myList[index+i]==="") {
-            myList[index+i] = "Slickepott";
-	    break;
-      }		
-    }
+    buildDynamicRow(index);
 
     index = 6;
-    correctPos = (Pesu.random(0,1));
-    myList[6+correctPos] = "Slickepott";
+    buildDynamicRow(index);
 
-    
-    for(var i =0; i<2; i++) {
-       if(myList[index+i]==="") {
-	   myList[index+i] = "Hålslev";
-	   break;
-	}
-    }
+
 
 
     console.log(myList);
- //Copy list to question
+    //Copy list to question
     question = myList.slice();
+
+    //Add not correct opition in the first free position, the option is not already used.
+    function buildDynamicRow(index) {
+      //Here we set correct answer
+      var correctPos = (Pesu.random(0,1));
+      myList[index+correctPos] = myList[index-1];
+
+      //Here we set faulty answer
+      for(var i =0; i<2; i++) {
+        if(myList[index+i]==="") {
+              myList[index+i] = myList[setFaultyAnswer(index)];
+  	    break;
+        }
+      }
+    }
+
+    //Return faulty answer index
+    function setFaultyAnswer(index) {
+        var result =0;
+        if(index=== 2) {
+          result = index+4;
+        }
+        if(index=== 6) {
+          result = index-4;
+        }
+        return result;
+    }
 
   }
 
