@@ -94,15 +94,15 @@ $(document).ready(function(){
     function setFaultyAnswer(index) {
       var result =0;
       if(index=== 2) {
-        //Correct answer on other row
+        //Correct answer on other row index
         result = 5;
       }
       if(index=== 6) {
-        //Correct answer on other row
+        //Correct answer on other row index
         result = 1;
       }
       if(index=== 10) {
-        //Correct answer on other row
+        //Correct answer on other row index
         result = 1;
       }
       return result;
