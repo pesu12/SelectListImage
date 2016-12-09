@@ -55,7 +55,11 @@ $(document).ready(function(){
     var myList = [
       "img/halslev.jpg", "Hålslev","", "",
       "img/Slickepott.jpg", "Slickepott", "","",
-      "img/bleck.jpg", "Bleck", "",""
+      "img/bleck.jpg", "Bleck", "","",
+      "img/djupbleck.jpg", "Djupbleck", "","",
+      "img/natsil.jpg", "Nätsil", "","",
+      "img/skopa.jpg", "Skopa", "","",
+      "img/pasklamma.jpg", "Påsklämma", "",""
     ];
 
     //how many rows we have
@@ -65,12 +69,9 @@ $(document).ready(function(){
 
 
     //Add not correct opition in the first free position, the option is not already used.
-    var index= 2;
-    buildDynamicRow(2);
-    index = 6;
-    buildDynamicRow(6);
-    index = 10;
-    buildDynamicRow(10);
+    for (var index =2;index<27; index=index+4) {
+      buildDynamicRow(index);
+    }
 
     console.log(myList);
     //Copy list to question
@@ -90,21 +91,16 @@ $(document).ready(function(){
       }
     }
 
-    //Return faulty answer index
+    //Get faulty answer by fetching Correct answer on other row index
     function setFaultyAnswer(index) {
       var result =0;
-      if(index=== 2) {
-        //Correct answer on other row index
-        result = 5;
-      }
-      if(index=== 6) {
-        //Correct answer on other row index
-        result = 1;
-      }
-      if(index=== 10) {
-        //Correct answer on other row index
-        result = 1;
-      }
+      if(index=== 2) {result = 5;}
+      if(index=== 6) {result = 1;}
+      if(index=== 10) {result = 1;}
+      if(index=== 14) {result = 1;}
+      if(index=== 18) {result = 1;}
+      if(index=== 22) {result = 1;}
+      if(index=== 26) {result = 1;}
       return result;
     }
   }
