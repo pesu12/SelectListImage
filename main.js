@@ -94,17 +94,15 @@ $(document).ready(function(){
     //Get faulty answer by fetching Correct answer on other row index
     function setFaultyAnswer(index) {
       var result =0;
-      if(index=== 2) {result = 5;}
-      if(index=== 6) {result = 1;}
-      if(index=== 10) {result = 1;}
-      if(index=== 14) {result = 1;}
-      if(index=== 18) {result = 1;}
-      if(index=== 22) {result = 1;}
-      if(index=== 26) {result = 1;}
+
+      //Get result that is not the same as the index.
+      do {
+        result =Pesu.random(0,listRows-1)*4+1;
+      } while(result === index);
+
       return result;
     }
   }
-
 
   //main part for making question
   function makeQuestion(index) {
