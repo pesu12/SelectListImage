@@ -6,7 +6,7 @@ $(document).ready(function(){
   'use strict';
 
   //Declare variables.
-  var mmi, text, out, log, selected, question,index, definedList, listRows, myList;
+  var mmi, text, log, selected, question,index, definedList, myList;
 
 
   //Get data from html
@@ -22,94 +22,85 @@ $(document).ready(function(){
   //Question array, picture, correct answer, answer 1, answer 2
   question = [];
 
-  definedList = false;
+  //If fixed list is used
+  definedList = true;
 
-
-  if (definedList) {
-    //Straight list
-    myList = [
-      "img/halslev.jpg", "Hålslev","Tesked", "Hålslev",
-      "img/Slickepott.jpg", "Slickepott", "Hålslev","Slickepott",
-      "img/bleck.jpg", "Bleck", "Djupbleck","Bleck",
-      "img/djupbleck.jpg", "Djupbleck", "Kantin","Djupbleck",
-      "img/natsil.jpg", "Nätsil", "Hålslev","Nätsil",
-      "img/skopa.jpg", "Skopa", "Sked","Skopa",
-      "img/pasklamma.jpg", "Påsklämma", "Påsklämma","Bleck"
-    ];
-
-    listRows = myList.length/4;
-
-    console.log(listRows);
-
-    //Copy list to question
-    question = myList.slice();
-
-  }
-
-  else {
-    //Build up dynamic list
-    console.log("Dynamic list created");
-
-    //Use pictures and correct answer as a base
-
-    var myList = [
-      "img/halslev.jpg", "Hålslev","", "",
-      "img/Slickepott.jpg", "Slickepott", "","",
-      "img/bleck.jpg", "Bleck", "","",
-      "img/djupbleck.jpg", "Djupbleck", "","",
-      "img/natsil.jpg", "Nätsil", "","",
-      "img/skopa.jpg", "Skopa", "","",
-      "img/pasklamma.jpg", "Påsklämma", "",""
-    ];
-
-    //how many rows we have
-    listRows = myList.length/4;
-
-    console.log(myList);
-
-
-    //Add not correct opition in the first free position, the option is not already used.
-    for (var index =2;index<27; index=index+4) {
-      buildDynamicRow(index);
-    }
-
-    console.log(myList);
-    //Copy list to question
-    question = myList.slice();
-
-    function buildDynamicRow(index) {
-      //Here we set correct answer
-      var correctPos = (Pesu.random(0,1));
-      myList[index+correctPos] = myList[index-1]
-
-      //Here we set faulty answer
-      for(var i =0; i<2; i++) {
-        if(myList[index+i]==="") {
-          myList[index+i] = myList[setFaultyAnswer(index)];
-          break;
-        }
-      }
-    }
-
-    //Get faulty answer by fetching Correct answer on other row index
-    function setFaultyAnswer(index) {
-      var result =0;
-
-      //Get result that is not the same as the index.
-      do {
-        result =Pesu.random(0,listRows-1)*4+1;
-      } while(result === index);
-
-      return result;
-    }
-  }
 
   //main part for making question
-  function makeQuestion(index) {
+  function makeQuestion() {
+
+    if (definedList) {
+      //Straight list
+      myList = [
+        "img/halslev.jpg", "Hålslev","Tesked", "Hålslev",
+        "img/Slickepott.jpg", "Slickepott", "Hålslev","Slickepott",
+        "img/bleck.jpg", "Bleck", "Djupbleck","Bleck",
+        "img/djupbleck.jpg", "Djupbleck", "Kantin","Djupbleck",
+        "img/natsil.jpg", "Nätsil", "Hålslev","Nätsil",
+        "img/skopa.jpg", "Skopa", "Sked","Skopa",
+        "img/pasklamma.jpg", "Påsklämma", "Påsklämma","Bleck"
+      ];
+
+      //Get random question
+      index = Pesu.random(0,(myList.length/4)-1)*4;
+
+      //Copy list to question
+      question = myList.slice();
+
+    } else {
+
+      var myList = [
+        "img/halslev.jpg", "Hålslev","", "",
+        "img/Slickepott.jpg", "Slickepott", "","",
+        "img/bleck.jpg", "Bleck", "","",
+        "img/djupbleck.jpg", "Djupbleck", "","",
+        "img/natsil.jpg", "Nätsil", "","",
+        "img/skopa.jpg", "Skopa", "","",
+        "img/pasklamma.jpg", "Påsklämma", "",""
+      ];
+
+      //Get random question
+      index = Pesu.random(0,(myList.length/4)-1)*4;
+
+      //Add not correct opition in the first free position, the option is not already used.
+      for (var j =2;j<27; j=j+4) {
+        buildDynamicRow(j);
+      }
+
+      //Copy list to question
+      question = myList.slice();
+
+      function buildDynamicRow(index) {
+        //Here we set correct answer
+        var correctPos = (Pesu.random(0,1));
+        myList[index+correctPos] = myList[index-1]
+
+        //Here we set faulty answer
+        for(var i =0; i<2; i++) {
+          if(myList[index+i]==="") {
+            myList[index+i] = myList[setFaultyAnswer(index)];
+            break;
+          }
+        }
+      }
+
+      //Get faulty answer by fetching Correct answer on other row index
+      function setFaultyAnswer(index) {
+        var result =0;
+
+        //Get result that is not the same as the index.
+        do {
+          result =Pesu.random(0,(myList.length/4)-1)*4+1;
+        } while(result === index);
+
+        return result;
+      }
+    }
 
     //Picure to be displayed
     var myPhoto = {}
     myPhoto.HTMLelement = document.getElementById('photo');
+
     document.getElementById("photo").src = question[index];
 
     //Options to be displayed
@@ -137,15 +128,14 @@ $(document).ready(function(){
         log.innerText = "Svar: Rätt"
       }
     });
-
   }
 
   //First question , use random position to decide question
-  makeQuestion(Pesu.random(0,listRows-1)*4);
+  makeQuestion();
 
   //When new question is clicked on
   mmi['newquestion'].onclick = (function() {
     //use random position to decide question
-    makeQuestion(Pesu.random(0,listRows-1)*4);
+    makeQuestion();
   });
 });
